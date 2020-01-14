@@ -13,13 +13,16 @@ namespace TextAdventure
        
         private string ItemAction { get; set; }
 
+        public bool CanPickUp { get; set; }
+
         //need constructor.  can constructor add to player / location?
 
-        public Items(string Name, string ItemDescription, string ItemAction)
+        public Items(string Name, string ItemDescription, string ItemAction, bool CanPickUp)
         {
             this.ItemName = Name;
             this.ItemDescription = ItemDescription;
             this.ItemAction = ItemAction;
+            this.CanPickUp = CanPickUp;
             //Console.WriteLine("Item Created");
         }
 

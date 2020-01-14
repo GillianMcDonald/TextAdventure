@@ -26,11 +26,15 @@ namespace TextAdventure
         }
 
         //want to see what locations are available
-        public void ViewLocationOptions()
+        public void ViewLocationOptions(Location location)
         {
-            Console.WriteLine("Please type the name of the locaiton you wish to move to exactly as you see it in the list below");
+            Console.WriteLine("Please type the name of the location you wish to move to exactly as you see it in the list below");
             foreach (Location l in LocationsList)
             {
+                if (l.GetLocationName() == location.GetLocationName())
+                    {
+                    continue;
+                    }
                 Console.WriteLine(l.GetLocationName());
             };
         }
@@ -58,21 +62,26 @@ namespace TextAdventure
            // Console.WriteLine("player created");
         }
 
-        public void PlayerPickUpItem(Items ItemName, Location Location)
+        public void PlayerPickUpItem(Items ItemName, Location Location, bool pickup)
         {
-            if (ItemName == null)
-            {
-                //Console.WriteLine("You have already picked up that item");
-            }
-            else
-            {
-                //add item to player list 
-                PlayerItems.Add(ItemName);
-                Console.WriteLine("You have picked up the Item"); //change to item name when possible 
-                //remove item from location list 
-                Location.RemoveLocationItem(ItemName);
-                // Console.WriteLine("Player picks up item");
-            }
+                //want a response in case people type in something that doesn't exist 
+                if (ItemName == null)
+                {
+                    //Console.WriteLine("You have already picked up that item");
+                }
+                if (pickup == false)
+                {
+                    Console.WriteLine("You can not pick up that item");
+                }
+                else if (pickup == true)
+                {
+                    //add item to player list 
+                    PlayerItems.Add(ItemName);
+                    Console.WriteLine("You have picked up the Item"); //change to item name when possible 
+                                                                      //remove item from location list 
+                    Location.RemoveLocationItem(ItemName);
+                    // Console.WriteLine("Player picks up item");
+                }
         }
 
         //want to see what's in the list
@@ -110,15 +119,16 @@ Type the number for the action you want:
         }
 
         public void UseItem(string item1, string item2)
-        { 
-            if (item1 == "Key" && item2 == "Door" || item1 == "Door" && item2 =="Key")
-            {
-                Console.WriteLine("Congratulations you have Escaped the Room, You win!");            
-            }
-            else
-            {
-                Console.WriteLine("Those items do not work together.  Try again");
-            }
+        {
+            Console.WriteLine("You have used the items");
+            //if (item1 == "Key" && item2 == "Door" || item1 == "Door" && item2 =="Key")
+            //{
+            //    Console.WriteLine("Congratulations you have Escaped the Room, You win!");            
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Those items do not work together.  Try again");
+            //}
 
         }
 

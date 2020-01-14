@@ -23,9 +23,9 @@ namespace TextAdventure
             //Console.WriteLine("Location Created");
         }
 
-        public Items AddLocationItem(string InName, string InItemDescription, string InItemAction)
+        public Items AddLocationItem(string InName, string InItemDescription, string InItemAction, bool InBool)
         {
-            Items result = new Items(InName, InItemDescription, InItemAction);
+            Items result = new Items(InName, InItemDescription, InItemAction, InBool);
             LocationItems.Add(result);
             return result;
 
@@ -65,9 +65,9 @@ namespace TextAdventure
 
         }
 
-        public Items FindItem(string ItemName)
+        public Items FindItem(string ItemName, Location location)
         {
-            foreach(Items i in LocationItems)
+            foreach(Items i in location.LocationItems)
             {
                 if(i.GetItemName() == ItemName)
                 {
@@ -75,14 +75,16 @@ namespace TextAdventure
                     return i;
                 }
             }
+            Console.WriteLine("That item is not in your current Location");
             return null;
         }
 
+
       
 
-        public bool DoesLocationHaveItem(string ItemName)
+        public bool DoesLocationHaveItem(string ItemName, Location location)
         {
-            foreach (Items i in LocationItems)
+            foreach (Items i in location.LocationItems)
             {
                 if (i.GetItemName() == ItemName)
                 {
@@ -96,7 +98,7 @@ namespace TextAdventure
 
         public void WhereAmI(Location Name)
         {
-            Console.WriteLine("You are in an " + Name.LocationName + " it's a " + Name.LocationDescription);
+            Console.WriteLine("You are in a " + Name.LocationName + " it's " + Name.LocationDescription);
         }
 
     }
