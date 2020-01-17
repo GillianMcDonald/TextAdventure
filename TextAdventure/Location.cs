@@ -17,7 +17,7 @@ namespace TextAdventure
 
         public List<Items> LocationItems { get; private set; }
 
-        public List<BasicZombie> LocationZombies { get; private set; }
+        public List<Enemy> LocationEnemies { get; private set; }
 
 
 
@@ -30,7 +30,7 @@ namespace TextAdventure
             this.Door3 = Door3;
             this.Door4 = Door4;
             this.LocationItems = new List<Items>();
-            this.LocationZombies = new List<BasicZombie>();
+            this.LocationEnemies = new List<Enemy>();
         }
 
         public Items AddLocationItem(string InName, string InItemDescription, string InItemAction, bool CanPickUp)
@@ -40,32 +40,48 @@ namespace TextAdventure
             return result;
         }
 
-        public BasicZombie AddLocationZombie(Location location, string name)
+        public Zombie AddLocationZombie(Location location, string name)
         {
-            BasicZombie result = new BasicZombie(location, name);
-            LocationZombies.Add(result);
-            return result;
+            Zombie enemy = new Zombie(location, name);
+            LocationEnemies.Add(enemy);
+            return enemy;
         }
 
-        public bool IsThereAZombie(Location location)
+        public ZombieKing AddLocationZombieKing(Location location, string name)
         {
-            if (location.LocationZombies.Count >= 1)
+            ZombieKing enemy = new ZombieKing(location, name);
+            LocationEnemies.Add(enemy);
+            return enemy;
+        }
+
+        public bool IsThereAnEnemy(Location location)
+        {
+            if (location.LocationEnemies.Count >= 1)
             {
                 return true;
             }
             return false;
         }
 
-        public BasicZombie ReturnBasicZombie (Location location, string name)
+        public Enemy GetEnemy(Location location)
         {
-                foreach (BasicZombie z in location.LocationZombies)
+            foreach (Enemy e in location.LocationEnemies)
             {
-                if (z.GetZombieName() == name)
-                {
-                    var result = z;
-                    return z;
-                }
+                return e;
             }
+            return null;
+        }
+
+        public Enemy ReturnBasicZombie (Location location, string name)
+        {
+                foreach (Enemy e in location.LocationEnemies)
+                {
+                    if (e.GetEnemyName() == name)
+                    {
+                        var result = e;
+                        return e;
+                    }
+                 }
             return null;
         }
 

@@ -18,13 +18,11 @@ namespace TextAdventure
         {
         void Move();
         }
-    interface IZombie : IMappable, IMovable
+    interface IEnemy : IMappable, IMovable
         {
-            bool HasHit { get; }
-            int ZombieHealth { get; }
-            bool ZombieNeutralized { get; }
-            bool ZombieActive { get; }
-            int ZombieHitPower { get; }
-        void DecreaseZombieHealth(int factor);
+            int EnemyHealth { get; }
+          
+            int EnemyHitPower { get; }
+        void DecreaseEnemyHealth(int factor, Enemy name);
         }
 }

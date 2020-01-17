@@ -10,7 +10,7 @@ namespace TextAdventure
         {
             Console.WriteLine("Welcome to Escape, what is your name?");
             var InputName = Console.ReadLine();
-            Player Player1 = new Player("InputName");
+            Player Player1 = new Player(InputName);
             Console.WriteLine("Welcome to the game " + InputName + ". Your Hit Power is 25 points per hit and your Health is currently 100 points.");
             return Player1;
         }
@@ -37,7 +37,7 @@ namespace TextAdventure
             Items Cages = Location1.AddLocationItem("Cages", "Rows of empty cages with open doors", "This item does nothing", false);
             Items Microscope = Location1.AddLocationItem("Microscope", "Warning light flashes showing non organic matter present", "This item does nothing", true);
             Items Clock = Location1.AddLocationItem("Clock", "Broken clock showing time as 2.10", "This item does nothing", true);
-            BasicZombie basicZombie1 = Location1.AddLocationZombie(Location1, "BasicZombie1");
+            Zombie Zombie = Location1.AddLocationZombie(Location1, "Zombie");
             return Location1;
         }
 
@@ -62,6 +62,7 @@ namespace TextAdventure
             Items WateringCan = Location3.AddLocationItem("Watering Can", "Green, plastic, empty watering can", "This item does nothing", true);
             Items Wheelbarrow = Location3.AddLocationItem("Wheelbarrow", "Metal wheelbarrow with only one handle", "This item does nothing", false);
             Items stairs = Location3.AddLocationItem("Stairs", "Concrete steps leading to ground level", "This item does nothing", false);
+            ZombieKing ZombieKing = Location3.AddLocationZombieKing(Location3, "The Zombie King");
             return Location3;
         }
 
@@ -73,6 +74,7 @@ namespace TextAdventure
             Items Wardrobe = Location4.AddLocationItem("Wardrobe", "Large wooden wardrobe full of dirty rags", "This item does nothing", false);
             Items Transporter = Location4.AddLocationItem("Transporter", "Small silver transporting device ", "Moves you to another Location", true);
             Items Pillow = Location4.AddLocationItem("Pillow", "Dirty, ripped feather pillow", "This item does nothing", true);
+            Zombie Zombie = Location4.AddLocationZombie(Location4, "Zombie");
             return Location4;
         }
 
@@ -94,7 +96,7 @@ Type the number for the action you want:
 Type the number for the action you want:
         1.View my items
         2.Use an item
-        3.Hit the Zombie");
+        3.Trade blows with the Zombie");
         }
     }
 }

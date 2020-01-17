@@ -9,6 +9,7 @@ namespace TextAdventure
         FightLogic FightLogic = new FightLogic();
         Game Game = new Game();
         Actions Actions = new Actions();
+        ConsoleChanges ConsoleChanges = new ConsoleChanges();
         public void LocationLogic(Player name, Location location)
         {
             Location currentLocation;
@@ -61,8 +62,18 @@ namespace TextAdventure
 
                         if (Item1Result == true)
                         {
-                            Actions.UseItem(Item1, name);
-                            Game.PlayerPrompt();
+                            Items ItemToUse = name.FindPlayerItem(Item1, name);
+                            if (ItemToUse.GetItemAction() == "This item does nothing")
+                            {
+                                Console.WriteLine("Unlucky, that item does absolutely nothing");
+                                name.PlayerItems.Remove(ItemToUse);
+                                Game.PlayerPrompt();
+                            }
+                            else
+                            {
+                                Actions.UseItem(Item1, name);
+                                Game.PlayerPrompt();
+                            }
                         }
                         if (Item1Result == false)
                         {
@@ -92,13 +103,23 @@ namespace TextAdventure
                             currentLocation = NewLocation3; //set currentLocation to the new location name.  I think this is the bit that hasn't kicked in 
                             NewLocation3.WhereAmI(NewLocation3);
                             //move to fight sequences here if there is a zombie in the new location 
-                            bool IsThereAZombie = NewLocation3.IsThereAZombie(NewLocation3);
-                            if(IsThereAZombie == true)
+                            bool IsThereAnEnemy = NewLocation3.IsThereAnEnemy(NewLocation3);
+                            if(IsThereAnEnemy == true)
                             {
-                                Console.WriteLine("There is a Zombie in the room");
-                                BasicZombie basicZombie = location.ReturnBasicZombie(NewLocation3, "BasicZombie1");
-                                FightLogic.LetsFight(name, basicZombie, NewLocation3);
+                                //in here need to get name of enemy from list, check what it is, do appropriate action
+                                Enemy Enemy = location.GetEnemy(NewLocation3);
 
+                                if (Enemy.GetEnemyName() == "Zombie" || Enemy.GetEnemyName() == "The Zombie King")
+                                {
+                                    ConsoleChanges.ConsoleDisplay();
+                                    Console.WriteLine("There is a Zombie in the room");
+                                    Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
+                                    FightLogic.LetsFight(name, Enemy, NewLocation3);
+                                    Game.PlayerPrompt();
+                                    LocationLogic(name, currentLocation);
+                                }
+
+                                
                             }
                             else
                             {

@@ -162,9 +162,10 @@ namespace TextAdventure
             PlayerHealth += factor;
         }
 
-        public void DecreasePlayerHealth(int factor)
+        public void DecreasePlayerHealth(int factor, Player name)
         {
             PlayerHealth -= factor;
+            Console.WriteLine(name.GetPlayerName() + "'s got hit!");
         }
 
         public void IncreasePlayerHitPower(int factor)
@@ -172,7 +173,10 @@ namespace TextAdventure
             PlayerHitPower += factor;
         }
 
-
+        public string GetPlayerName()
+        {
+            return PlayerName;
+        }
 
     }
 }

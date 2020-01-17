@@ -6,17 +6,16 @@ namespace TextAdventure
 {
     class FightLogic
     {
-       
-        
-        public void LetsFight(Player name, BasicZombie BasicZombie, Location location)
+        public void LetsFight(Player name, Enemy EnemyName, Location location)
         {
             Logic Logic = new Logic();
             Game Game = new Game();
             Actions Actions = new Actions();
-            Console.Write("Player Hit Power is " + name.PlayerHitPower + " per hit. ");
-            Console.WriteLine("Player Health is " + name.PlayerHealth);
-            Console.Write("Zombie Hit Power is " + BasicZombie.ZombieHealth + " per hit. ");
-            Console.WriteLine("Zombie Health is " + BasicZombie.ZombieHealth);
+            Console.Write(name.GetPlayerName() + "'s Hit Power is " + name.PlayerHitPower + " per hit. ");
+            Console.WriteLine(name.GetPlayerName() + "'s health is " + name.PlayerHealth);
+            Console.Write(EnemyName.GetEnemyName() + " Hit Power is " + EnemyName.EnemyHitPower + " per hit. ");
+            Console.WriteLine(EnemyName.GetEnemyName() + " health is " + EnemyName.EnemyHealth);
+            Console.WriteLine("The Zombie lunges at you, you dodge out of the way" );
             Game.FightPrompt();
 
             while (true)
@@ -58,26 +57,23 @@ namespace TextAdventure
                     }
                     if(FightAction == "3") //Hit the Zombie
                     {
-
-                        //should there be a separate class for this 
-                        // while loop that while players health is greater than zero and zombies health is greater than zero they trade blows
-                        // if only players health over 0 player wins - break out back to logic function 
-                        //if only zombies health over o player loses - End Game
-                        //start again button?
-
-
-
-                        //decrease zombie health by player hit power
-                        BasicZombie.DecreaseZombieHealth(name.PlayerHitPower);
-                        if(BasicZombie.ZombieHealth > 0)
+                        while (EnemyName.EnemyHealth > 0 && name.PlayerHealth > 0)
                         {
-                            Console.WriteLine("Zombie Health is " + BasicZombie.ZombieHealth);
-                            //then zombie hits you and round and round 
+                            EnemyName.DecreaseEnemyHealth(name.PlayerHitPower, EnemyName);
+                            Console.WriteLine(EnemyName.GetEnemyName() + " health is now " + EnemyName.EnemyHealth);
+                            name.DecreasePlayerHealth(EnemyName.EnemyHitPower, name);
+                            Console.WriteLine(name.GetPlayerName() + "'s health is now " + name.PlayerHealth);
+                        }
+
+                        if (EnemyName.EnemyHealth <= 0)
+                        {
+                            Console.WriteLine("You killed the " + EnemyName.GetEnemyName());
+                            location.WhereAmI(location);
+                            break;
                         }
                         else
                         {
-                            Console.WriteLine("You killed the zombie (again)");
-                            Logic.LocationLogic(name, location);
+                            Console.WriteLine(name.GetPlayerName() + " got killed in a brutal way.  Thanks for Playing");
                         }
                     }
                 }
