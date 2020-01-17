@@ -10,14 +10,21 @@ namespace TextAdventure
             Game Game = new Game();
             Logic Logic = new Logic();
             Player Player1 = Game.SetPlayer();
+            Location Location0 = Game.SetLocation0(Player1);
             Location Location1 = Game.SetLocation1(Player1);
             Location Location2 = Game.SetLocation2(Player1);
-           
-            Location1.WhereAmI(Location1);
-            Player1.ActionPrompt();
+            Location Location3 = Game.SetLocation3(Player1);
+            Location Location4 = Game.SetLocation4(Player1);
 
-            Logic.LocationLogic(Player1, Location1);
-            Logic.LocationLogic(Player1, Location2);
+            
+           
+
+            Location0.WhereAmI(Location0);
+            Game.PlayerPrompt();
+            Logic.LocationLogic(Player1, Location0);
+
+           
+
         }
     } 
 }
