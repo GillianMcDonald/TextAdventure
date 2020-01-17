@@ -6,7 +6,7 @@ namespace TextAdventure
 {
     class ZombieKing : Enemy
     {
-        public override int EnemyHealth { get; protected set; } = 100;
+        public override int EnemyHealth { get; protected set; } = 200;
 
         public override int EnemyHitPower { get; protected set; } = 50;
 

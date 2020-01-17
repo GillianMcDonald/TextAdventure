@@ -55,26 +55,55 @@ namespace TextAdventure
                             Game.FightPrompt();
                         }
                     }
-                    if(FightAction == "3") //Hit the Zombie
+                    if(FightAction == "3") //trade blows with enemy
                     {
-                        while (EnemyName.EnemyHealth > 0 && name.PlayerHealth > 0)
+                        if (EnemyName.GetEnemyName() == "Zombie")
                         {
-                            EnemyName.DecreaseEnemyHealth(name.PlayerHitPower, EnemyName);
-                            Console.WriteLine(EnemyName.GetEnemyName() + " health is now " + EnemyName.EnemyHealth);
-                            name.DecreasePlayerHealth(EnemyName.EnemyHitPower, name);
-                            Console.WriteLine(name.GetPlayerName() + "'s health is now " + name.PlayerHealth);
-                        }
+                            while (EnemyName.EnemyHealth >= 0 && name.PlayerHealth >= 0)
+                            {
+                                EnemyName.DecreaseEnemyHealth(name.PlayerHitPower, EnemyName);
+                                Console.WriteLine(EnemyName.GetEnemyName() + " health is now " + EnemyName.EnemyHealth);
+                                if (EnemyName.EnemyHealth <= 0)
+                                {
+                                    Console.WriteLine("You killed the " + EnemyName.GetEnemyName());
+                                    location.WhereAmI(location);
+                                    break;
+                                }
 
-                        if (EnemyName.EnemyHealth <= 0)
+                                name.DecreasePlayerHealth(EnemyName.EnemyHitPower, name);
+                                Console.WriteLine(name.GetPlayerName() + "'s health is now " + name.PlayerHealth);
+                                if (name.PlayerHealth <= 0)
+                                {
+                                    Console.WriteLine(name.GetPlayerName() + " got killed in a brutal way.  Thanks for Playing");
+                                    break;
+                                }
+                                break;
+                            }
+                        }
+                        if (EnemyName.GetEnemyName() == "The Zombie King")
                         {
-                            Console.WriteLine("You killed the " + EnemyName.GetEnemyName());
-                            location.WhereAmI(location);
+                            while (EnemyName.EnemyHealth >= 0 && name.PlayerHealth >= 0)
+                            {
+                                EnemyName.DecreaseEnemyHealth(name.PlayerHitPower, EnemyName);
+                                Console.WriteLine(EnemyName.GetEnemyName() + " health is now " + EnemyName.EnemyHealth);
+                                if (EnemyName.EnemyHealth <= 0)
+                                    {
+                                    Console.WriteLine("You killed the " + EnemyName.GetEnemyName() + " and have won the game.  You run up the stairs and into the distance.");
+                                    break;
+                                    }
+
+                                name.DecreasePlayerHealth(EnemyName.EnemyHitPower, name);
+                                Console.WriteLine(name.GetPlayerName() + "'s health is now " + name.PlayerHealth);
+                                if (name.PlayerHealth <= 0)
+                                    {
+                                    Console.WriteLine(name.GetPlayerName() + " got killed in a brutal way.  Thanks for Playing");
+                                    break;
+                                    }
+                                
+                            }
                             break;
                         }
-                        else
-                        {
-                            Console.WriteLine(name.GetPlayerName() + " got killed in a brutal way.  Thanks for Playing");
-                        }
+                        break;
                     }
                 }
                 else

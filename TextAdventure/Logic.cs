@@ -109,17 +109,22 @@ namespace TextAdventure
                                 //in here need to get name of enemy from list, check what it is, do appropriate action
                                 Enemy Enemy = location.GetEnemy(NewLocation3);
 
-                                if (Enemy.GetEnemyName() == "Zombie" || Enemy.GetEnemyName() == "The Zombie King")
+                                if (Enemy.GetEnemyName() == "Zombie")
                                 {
-                                    ConsoleChanges.ConsoleDisplay();
+                                    ConsoleChanges.ConsoleDisplayZombie();
                                     Console.WriteLine("There is a Zombie in the room");
                                     Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
                                     FightLogic.LetsFight(name, Enemy, NewLocation3);
                                     Game.PlayerPrompt();
                                     LocationLogic(name, currentLocation);
                                 }
-
-                                
+                                if (Enemy.GetEnemyName() == "The Zombie King")
+                                {
+                                    ConsoleChanges.ConsoleDisplayZombieKing();
+                                    Console.WriteLine("There is a Zombie in the room");
+                                    Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
+                                    FightLogic.LetsFight(name, Enemy, NewLocation3);
+                                }
                             }
                             else
                             {
