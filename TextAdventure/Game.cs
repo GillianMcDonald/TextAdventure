@@ -51,6 +51,7 @@ namespace TextAdventure
             Items Sphygmomanometer = Location2.AddLocationItem("Sphygmomanometer", "Blood pressure meter but you knew that right?", "This item does nothing", true);
             Items Syringe = Location2.AddLocationItem("Syringe", "Filled with purple liquid", "This item increases your hit power by 25", true);
             Items Chair = Location2.AddLocationItem("Chair", "Stained roller chair", "This item does nothing", false);
+            Mage Mage = Location2.AddLocationMage(Location2, "Wise Old Mage");
             return Location2;
         }
 

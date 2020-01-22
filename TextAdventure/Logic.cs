@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Environment;
 
 namespace TextAdventure
 {
     class Logic
     {
-        FightLogic FightLogic = new FightLogic();
-        Game Game = new Game();
-        Actions Actions = new Actions();
-        ConsoleChanges ConsoleChanges = new ConsoleChanges();
         public void LocationLogic(Player name, Location location)
         {
-            Location currentLocation;
-            currentLocation = location;
+            Location currentLocation = location;
+            FightLogic FightLogic = new FightLogic();
+            Game Game = new Game();
+            TicTacToe TicTacToe = new TicTacToe();
+            Actions Actions = new Actions();
+
 
             while (true)
             {
                 string Action = Console.ReadLine();
 
-                if (Action == "1" || Action == "2" || Action == "3" || Action == "4" || Action == "5" || Action == "6")
+                switch(Action)
                 {
-                    if (Action == "1") //look around
-                    {
+                    case "1": //look around
                         Console.WriteLine("You can see the following items");
                         location.ViewLocationItems(location);
                         Game.PlayerPrompt();
-                    }
-                    if (Action == "2") //search an item
-                    {
+                        break;
+                    case "2": //search an item
                         Console.WriteLine("Please type the name of the Item would you like to search exactly as you see it in the list");
                         string ItemSearch = Console.ReadLine();
                         Items ItemSearch2 = location.FindLocationItem(ItemSearch, location);
@@ -39,55 +38,57 @@ namespace TextAdventure
                             location.ItemDescription(ItemSearch);
                         }
                         Game.PlayerPrompt();
-                    }
-                    if (Action == "3")//pick up an item
-                    {
+                        break;
+                    case "3": //pick up an item
                         Console.WriteLine("Please type the name of the Item would you like to pick up exactly as you see it in the list");
                         string ItemKeep = Console.ReadLine();
                         Items ItemKeep2 = location.FindLocationItem(ItemKeep, location);
-                        if (ItemKeep2 == null)
-                        { }
-                        else
+                        if (ItemKeep2 != null)
                         {
                             name.PlayerPickUpItem(ItemKeep2, location, ItemKeep2.CanPickUp);
                         }
                         Game.PlayerPrompt();
-                    }
-                    if (Action == "4") //use an item 
-                    {
+                        break;
+                    case "4": //use an item 
                         name.ViewPlayerItems();
-                        Console.WriteLine("Please type the name of the Item would you like to use");
-                        string Item1 = Console.ReadLine();
-                        bool Item1Result = name.DoesPlayerHaveItem(Item1); // check player has item
-
-                        if (Item1Result == true)
+                        if(name.PlayerItems.Count >= 1)
                         {
-                            Items ItemToUse = name.FindPlayerItem(Item1, name);
-                            if (ItemToUse.GetItemAction() == "This item does nothing")
+                            Console.WriteLine("Please type the name of the Item would you like to use");
+                            string Item1 = Console.ReadLine();
+                            bool Item1Result = name.DoesPlayerHaveItem(Item1); // check player has item
+
+                            if (Item1Result)
                             {
-                                Console.WriteLine("Unlucky, that item does absolutely nothing");
-                                name.PlayerItems.Remove(ItemToUse);
-                                Game.PlayerPrompt();
+                                Items ItemToUse = name.FindPlayerItem(Item1, name);
+                                if (ItemToUse.GetItemAction() == "This item does nothing")
+                                {
+                                    Console.WriteLine("Unlucky, that item does absolutely nothing");
+                                    name.PlayerItems.Remove(ItemToUse);
+                                    Game.PlayerPrompt();
+                                }
+                                else
+                                {
+                                    Actions.UseItem(Item1, name);
+                                    Game.PlayerPrompt();
+                                }
                             }
-                            else
+                            if (!Item1Result)
                             {
-                                Actions.UseItem(Item1, name);
+                                Console.WriteLine("You have not picked up that item");
                                 Game.PlayerPrompt();
                             }
                         }
-                        if (Item1Result == false)
+                        else
                         {
-                            Console.WriteLine("You have not picked up that item");
                             Game.PlayerPrompt();
                         }
-                    }
-                    if (Action == "5") //view my items
-                    {
+                        
+                        break;
+                    case "5": //view my items
                         name.ViewPlayerItems();
                         Game.PlayerPrompt();
-                    }
-                    if (Action == "6") //change location 
-                    {
+                        break;
+                    case "6"://change location 
                         name.ViewLocationOptions(location); //list possible locations as doors
                         string LeavingLocation = location.LocationToString(location);
                         string NewLocation = Console.ReadLine(); //ask for door to go through
@@ -97,81 +98,57 @@ namespace TextAdventure
                             Console.WriteLine("That location does not exist, did you type it in the format 'Door 1'?");
                             Game.PlayerPrompt();
                         }
-                        if (NewLocation2 != null)
+                        else
                         {
                             Location NewLocation3 = name.FindLocation(NewLocation2); //convert location string into Location 
-                            currentLocation = NewLocation3; //set currentLocation to the new location name.  I think this is the bit that hasn't kicked in 
+                            currentLocation = NewLocation3; //set currentLocation to the new location name.  
                             NewLocation3.WhereAmI(NewLocation3);
-                            //move to fight sequences here if there is a zombie in the new location 
+                            //move to fight sequences here if there is an enemy in the new location. 
                             bool IsThereAnEnemy = NewLocation3.IsThereAnEnemy(NewLocation3);
-                            if(IsThereAnEnemy == true)
+                            Console.WriteLine("is there an enemy in room 3 " + IsThereAnEnemy);
+                            
+                            switch (IsThereAnEnemy)
                             {
-                                //in here need to get name of enemy from list, check what it is, do appropriate action
-                                Enemy Enemy = location.GetEnemy(NewLocation3);
-
-                                if (Enemy.GetEnemyName() == "Zombie")
-                                {
-                                    ConsoleChanges.ConsoleDisplayZombie();
-                                    Console.WriteLine("There is a Zombie in the room");
-                                    Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
-                                    FightLogic.LetsFight(name, Enemy, NewLocation3);
+                                case true:
+                                    //in here need to get name of enemy from list, check what it is, do appropriate action
+                                    Enemy Enemy = location.GetEnemy(NewLocation3);
+                                    Console.WriteLine("the enemy name is " + Enemy.GetEnemyName());
+                                    if (Enemy.GetEnemyName() == "Zombie")
+                                    {
+                                        ConsoleChanges.ConsoleDisplayZombie();
+                                        Console.WriteLine("There is a Zombie in the room");
+                                        Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
+                                        FightLogic.LetsFight(name, Zombie, NewLocation3);
+                                        Game.PlayerPrompt();
+                                        LocationLogic(name, currentLocation);
+                                    }
+                                    if (Enemy.GetEnemyName() == "The Zombie King")
+                                    {
+                                        ConsoleChanges.ConsoleDisplayZombieKing();
+                                        Console.WriteLine("The Zombie King is in the room");
+                                        Enemy ZKing = location.ReturnBasicZombie(NewLocation3, "The Zombie King"); 
+                                        FightLogic.LetsFight(name, ZKing, NewLocation3); 
+                                    }
+                                    if (Enemy.GetEnemyName() == "Wise Old Mage")
+                                    {
+                                        ConsoleChanges.ConsoleDisplayMage();
+                                        bool result = TicTacToe.TicTacToeLogic(name, Enemy, NewLocation3);
+                                        Game.PlayerPrompt();
+                                        LocationLogic(name, currentLocation);
+                                    }
+                                    break;
+                                case false:
                                     Game.PlayerPrompt();
                                     LocationLogic(name, currentLocation);
-                                }
-                                if (Enemy.GetEnemyName() == "The Zombie King")
-                                {
-                                    ConsoleChanges.ConsoleDisplayZombieKing();
-                                    Console.WriteLine("There is a Zombie in the room");
-                                    Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
-                                    FightLogic.LetsFight(name, Enemy, NewLocation3);
-                                }
-                            }
-                            else
-                            {
-                                Game.PlayerPrompt();
-                                LocationLogic(name, currentLocation);
+                                    break;
                             }
                         }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Please enter a number between 1 and 6");
+                       break;
+                    default:
+                        Console.WriteLine("Please enter a number between 1 and 6");
+                        break;
                 }
             }
         }
     }
 }
-
-
-//THIS IS THE OLD US ITEM FUNCTION WHERE ONE ITEM WAS USED WITH ANOTHER
-//Console.WriteLine("Please type the name of the Item would you like to use");
-//                        string Item1 = Console.ReadLine();
-//bool Item1Result = name.DoesPlayerHaveItem(Item1); // check player has item
-
-////Items Item1Item = Location1.FindItem(Item1);
-//Console.WriteLine("Now type the name of the item in the room you would like to use to use the first item with");
-//                        string Item2 = Console.ReadLine();
-
-//bool Item2Result = location.DoesLocationHaveItem(Item2, location); //check location has item
-
-//if (Item1Result == true && Item2Result == true)
-//{
-//    name.UseItem(Item1, Item2);
-//    Game.PlayerPrompt();
-//}
-//if (Item1Result == true && Item2Result == false)
-//{
-//    Console.WriteLine("The 2nd item is not at your location");
-//    Game.PlayerPrompt();
-//}
-//if (Item1Result == false && Item2Result == true)
-//{
-//    Console.WriteLine("You have not picked up the first item");
-//    Game.PlayerPrompt();
-//}
-//if (Item1Result == false && Item2Result == false)
-//{
-//    Console.WriteLine("You have not picked up the first item and the 2nd item is not at your location");
-//    Game.PlayerPrompt();
-//}

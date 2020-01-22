@@ -7,6 +7,7 @@ namespace TextAdventure
     {
         static void Main(string[] args)
         {
+           
             Game Game = new Game();
             Logic Logic = new Logic();
             Player Player1 = Game.SetPlayer();

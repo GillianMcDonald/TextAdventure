@@ -54,6 +54,13 @@ namespace TextAdventure
             return enemy;
         }
 
+        public Mage AddLocationMage(Location location, string name)
+        {
+            Mage enemy = new Mage(location, name);
+            LocationEnemies.Add(enemy);
+            return enemy;
+        }
+
         public bool IsThereAnEnemy(Location location)
         {
             if (location.LocationEnemies.Count >= 1)
@@ -71,6 +78,7 @@ namespace TextAdventure
             }
             return null;
         }
+
 
         public Enemy ReturnBasicZombie (Location location, string name)
         {

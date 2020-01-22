@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TextAdventure
 {
-    class Zombie : Enemy
+    class Mage : Enemy
     {
         public override int EnemyHealth { get; protected set; } = 50;
 
@@ -13,7 +13,7 @@ namespace TextAdventure
         public override string EnemyName { get; protected set; }
 
 
-        public Zombie(Location location, string name)
+        public Mage(Location location, string name)
         {
             this.EnemyName = name;
         }
