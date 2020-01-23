@@ -14,6 +14,7 @@ namespace TextAdventure
             Game Game = new Game();
             TicTacToe TicTacToe = new TicTacToe();
             Actions Actions = new Actions();
+            
 
 
             while (true)
@@ -68,7 +69,7 @@ namespace TextAdventure
                                 }
                                 else
                                 {
-                                    Actions.UseItem(Item1, name);
+                                    Actions.UseItem(Item1, name, location);
                                     Game.PlayerPrompt();
                                 }
                             }
@@ -103,45 +104,12 @@ namespace TextAdventure
                             Location NewLocation3 = name.FindLocation(NewLocation2); //convert location string into Location 
                             currentLocation = NewLocation3; //set currentLocation to the new location name.  
                             NewLocation3.WhereAmI(NewLocation3);
+
                             //move to fight sequences here if there is an enemy in the new location. 
                             bool IsThereAnEnemy = NewLocation3.IsThereAnEnemy(NewLocation3);
-                            Console.WriteLine("is there an enemy in room 3 " + IsThereAnEnemy);
+
+                            FightLogic.IfEnemyFound(name, location, NewLocation3, IsThereAnEnemy);
                             
-                            switch (IsThereAnEnemy)
-                            {
-                                case true:
-                                    //in here need to get name of enemy from list, check what it is, do appropriate action
-                                    Enemy Enemy = location.GetEnemy(NewLocation3);
-                                    Console.WriteLine("the enemy name is " + Enemy.GetEnemyName());
-                                    if (Enemy.GetEnemyName() == "Zombie")
-                                    {
-                                        ConsoleChanges.ConsoleDisplayZombie();
-                                        Console.WriteLine("There is a Zombie in the room");
-                                        Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
-                                        FightLogic.LetsFight(name, Zombie, NewLocation3);
-                                        Game.PlayerPrompt();
-                                        LocationLogic(name, currentLocation);
-                                    }
-                                    if (Enemy.GetEnemyName() == "The Zombie King")
-                                    {
-                                        ConsoleChanges.ConsoleDisplayZombieKing();
-                                        Console.WriteLine("The Zombie King is in the room");
-                                        Enemy ZKing = location.ReturnBasicZombie(NewLocation3, "The Zombie King"); 
-                                        FightLogic.LetsFight(name, ZKing, NewLocation3); 
-                                    }
-                                    if (Enemy.GetEnemyName() == "Wise Old Mage")
-                                    {
-                                        ConsoleChanges.ConsoleDisplayMage();
-                                        bool result = TicTacToe.TicTacToeLogic(name, Enemy, NewLocation3);
-                                        Game.PlayerPrompt();
-                                        LocationLogic(name, currentLocation);
-                                    }
-                                    break;
-                                case false:
-                                    Game.PlayerPrompt();
-                                    LocationLogic(name, currentLocation);
-                                    break;
-                            }
                         }
                        break;
                     default:
@@ -152,3 +120,41 @@ namespace TextAdventure
         }
     }
 }
+
+
+
+//switch (IsThereAnEnemy)
+//{
+//    case true:
+//        //in here need to get name of enemy from list, check what it is, do appropriate action
+//        Enemy Enemy = location.GetEnemy(NewLocation3);
+//        Console.WriteLine("the enemy name is " + Enemy.GetEnemyName());
+//        if (Enemy.GetEnemyName() == "Zombie")
+//        {
+//            ConsoleChanges.ConsoleDisplayZombie();
+//            Console.WriteLine("There is a Zombie in the room");
+//            Enemy Zombie = location.ReturnBasicZombie(NewLocation3, "Zombie");
+//            FightLogic.LetsFight(name, Zombie, NewLocation3);
+//            Game.PlayerPrompt();
+//            LocationLogic(name, currentLocation);
+//        }
+//        if (Enemy.GetEnemyName() == "The Zombie King")
+//        {
+//            ConsoleChanges.ConsoleDisplayZombieKing();
+//            Console.WriteLine("The Zombie King is in the room");
+//            Enemy ZKing = location.ReturnBasicZombie(NewLocation3, "The Zombie King"); 
+//            FightLogic.LetsFight(name, ZKing, NewLocation3); 
+//        }
+//        if (Enemy.GetEnemyName() == "Wise Old Mage")
+//        {
+//            ConsoleChanges.ConsoleDisplayMage();
+//            bool result = TicTacToe.TicTacToeLogic(name, Enemy, NewLocation3);
+//            Game.PlayerPrompt();
+//            LocationLogic(name, currentLocation);
+//        }
+//        break;
+//    case false:
+//        Game.PlayerPrompt();
+//        LocationLogic(name, currentLocation);
+//        break;
+//}

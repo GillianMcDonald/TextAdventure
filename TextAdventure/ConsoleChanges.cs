@@ -6,6 +6,36 @@ namespace TextAdventure
 {
     class ConsoleChanges
     {
+
+        public static void ConsoleDisplayMap()
+        {
+            var asciiArray = new[]
+           {
+
+                @"                     _________________                     ",
+                @"                    |                 |                    ",
+                @"                    |                 |                    ",
+                @"                    |                 |                    ",
+                @"                    |                 |                    ",
+                @" ___________________|________/1_______|___________________ ",
+                @"|                   |                 |                   |",
+                @"|                   |      START      |                   |",
+                @"|                  /4      POINT      2\                  |",
+                @"|                   |                 |                   |",
+                @"|___________________|________  _______|___________________|",
+                @"                    |        \3       |                    ",
+                @"                    |                 |                    ",
+                @"                    |                 |                    ",
+                @"                    |                 |                    ",
+                @"                    |_________________|                    ",
+
+              };
+
+            foreach (string line in asciiArray)
+            {
+                Console.WriteLine(line);
+            }
+        }
         public static void ConsoleDisplayZombie()
         {
 

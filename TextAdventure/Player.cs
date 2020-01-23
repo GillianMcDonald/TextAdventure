@@ -28,9 +28,19 @@ namespace TextAdventure
             return result;
         }
 
-        // if im in the kitchen and bools are all true show all the doors, go to the new location 
-        //if i'm in room 1, only option is door1 but when i go through this time i want to go the Kitchen not the lab
+      
+        public void TransporterMove(Player name, string location)
+        {
+            foreach (Location l in name.LocationsList)
+            {
+                if(l.GetLocationName() == location)
+                {
+                    continue;
+                }
+                Console.WriteLine(l.GetLocationName());
+            }
 
+        }
 
 
         //want to see what locations are available.  need to know where you are
@@ -181,103 +191,3 @@ namespace TextAdventure
     }
 }
 
-
-//public void ViewLocationOptions(Location location)
-//{
-//    Console.WriteLine("Please type the number of the door you wish to go through exactly as you see it in the list below");
-
-//    if (location.GetLocationName() == "disused kitchen")
-//    {
-//        if (location.GetDoor1() == true)
-//        {
-//            Console.WriteLine("Door 1");
-//        }
-//        if (location.GetDoor2() == true)
-//        {
-//            Console.WriteLine("Door 2");
-//        }
-//        if (location.GetDoor3() == true)
-//        {
-//            Console.WriteLine("Door 3");
-//        }
-//        if (location.GetDoor4() == true)
-//        {
-//            Console.WriteLine("Door 4");
-//        }
-//    }
-//    if (location.GetLocationName() == "old laboritory")
-//    {
-//        if (location.GetDoor1() == true)
-//        {
-//            Console.WriteLine("Door 1");
-//        }
-//        if (location.GetDoor2() == true)
-//        {
-//            Console.WriteLine("Door 2");
-//        }
-//        if (location.GetDoor3() == true)
-//        {
-//            Console.WriteLine("Door 3");
-//        }
-//        if (location.GetDoor4() == true)
-//        {
-//            Console.WriteLine("Door 4");
-//        }
-//    }
-//    if (location.GetLocationName() == "sunken courtyard")
-//    {
-//        if (location.GetDoor1() == true)
-//        {
-//            Console.WriteLine("Door 1");
-//        }
-//        if (location.GetDoor2() == true)
-//        {
-//            Console.WriteLine("Door 2");
-//        }
-//        if (location.GetDoor3() == true)
-//        {
-//            Console.WriteLine("Door 3");
-//        }
-//        if (location.GetDoor4() == true)
-//        {
-//            Console.WriteLine("Door 4");
-//        }
-//    }
-//    if (location.GetLocationName() == "dormitory")
-//    {
-//        if (location.GetDoor1() == true)
-//        {
-//            Console.WriteLine("Door 1");
-//        }
-//        if (location.GetDoor2() == true)
-//        {
-//            Console.WriteLine("Door 2");
-//        }
-//        if (location.GetDoor3() == true)
-//        {
-//            Console.WriteLine("Door 3");
-//        }
-//        if (location.GetDoor4() == true)
-//        {
-//            Console.WriteLine("Door 4");
-//        }
-//    }
-//    if (location.GetLocationName() == "medical room")
-//    {
-//        if (location.GetDoor1() == true)
-//        {
-//            Console.WriteLine("Door 1");
-//        }
-//        if (location.GetDoor2() == true)
-//        {
-//            Console.WriteLine("Door 2");
-//        }
-//        if (location.GetDoor3() == true)
-//        {
-//            Console.WriteLine("Door 3");
-//        }
-//        if (location.GetDoor4() == true)
-//        {
-//            Console.WriteLine("Door 4");
-//        }
-//    }

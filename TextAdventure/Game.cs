@@ -6,12 +6,15 @@ namespace TextAdventure
 {
     class Game
     {
+        ConsoleChanges ConsoleChanges = new ConsoleChanges();
         public Player SetPlayer()
         {
             Console.WriteLine("Welcome to Escape, what is your name?");
             var InputName = Console.ReadLine();
             Player Player1 = new Player(InputName);
             Console.WriteLine("Welcome to the game " + InputName + ". Your Hit Power is 25 points per hit and your Health is currently 100 points.");
+            Console.WriteLine("Here is a map of the area, how on earth will you get out?");
+            ConsoleChanges.ConsoleDisplayMap();
             return Player1;
         }
 
@@ -73,7 +76,7 @@ namespace TextAdventure
             Location Location4 = name.AddLocation("dormitory", "Beds with restraints are crammed together, there's fresh blood on the floor", false, false, false, true);
             Items Chains = Location4.AddLocationItem("Chains", "Lengths of chain used to chain the beds together", "This item does nothing", false);
             Items Wardrobe = Location4.AddLocationItem("Wardrobe", "Large wooden wardrobe full of dirty rags", "This item does nothing", false);
-            Items Transporter = Location4.AddLocationItem("Transporter", "Small silver transporting device ", "Moves you to another Location", true);
+            Items Transporter = Location4.AddLocationItem("Transporter", "Small silver transporting device ", "Moves you to any other room, basically run away from an enemy.....", true);
             Items Pillow = Location4.AddLocationItem("Pillow", "Dirty, ripped feather pillow", "This item does nothing", true);
             Zombie Zombie = Location4.AddLocationZombie(Location4, "Zombie");
             return Location4;

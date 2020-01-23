@@ -6,7 +6,50 @@ namespace TextAdventure
 {
     class FightLogic
     {
-        public void LetsFight(Player name, Enemy EnemyName, Location location)
+        Game Game = new Game();
+        Logic Logic = new Logic();
+        TicTacToe TicTacToe = new TicTacToe();
+        public void IfEnemyFound(Player PlayerName, Location LeavingLocation, Location NewLocation, bool IsThereAnEnemy)
+        {
+            switch (IsThereAnEnemy)
+            {
+                case true:
+                    //in here need to get name of enemy from list, check what it is, do appropriate action
+                    Enemy Enemy = LeavingLocation.GetEnemy(NewLocation);
+                    if (Enemy.GetEnemyName() == "Zombie")
+                    {
+                        ConsoleChanges.ConsoleDisplayZombie();
+                        Console.WriteLine("There is a Zombie in the room");
+                        Enemy Zombie = LeavingLocation.ReturnBasicZombie(NewLocation, "Zombie");
+                        LetsFight(PlayerName, Zombie, NewLocation);
+                        Game.PlayerPrompt();
+                        Logic.LocationLogic(PlayerName, NewLocation);
+                    }
+                    if (Enemy.GetEnemyName() == "The Zombie King")
+                    {
+                        ConsoleChanges.ConsoleDisplayZombieKing();
+                        Console.WriteLine("The Zombie King is in the room");
+                        Enemy ZKing = LeavingLocation.ReturnBasicZombie(NewLocation, "The Zombie King");
+                        LetsFight(PlayerName, ZKing, NewLocation);
+                    }
+                    if (Enemy.GetEnemyName() == "Wise Old Mage")
+                    {
+                        ConsoleChanges.ConsoleDisplayMage();
+                        bool result = TicTacToe.TicTacToeLogic(PlayerName, Enemy, NewLocation);
+                        Game.PlayerPrompt();
+                        Logic.LocationLogic(PlayerName, NewLocation);
+                    }
+                    break;
+                case false:
+                    Game.PlayerPrompt();
+                    Logic.LocationLogic(PlayerName, NewLocation);
+                    break;
+            }
+
+        }
+
+
+            public void LetsFight(Player name, Enemy EnemyName, Location location)
         {
             Logic Logic = new Logic();
             Game Game = new Game();
@@ -23,12 +66,12 @@ namespace TextAdventure
             {
                 string FightAction = Console.ReadLine();
 
-                if(FightAction == "1") //tried to use switches here but it broke out back to the logic code after every action or not at all.  
+                if(FightAction == "1") //View items.  Tried to use switches here but it broke out back to the logic code after every action or not at all.  
                 {
                     name.ViewPlayerItems();
                     Game.FightPrompt();
                 }
-                if(FightAction == "2")
+                if(FightAction == "2") //use items
                 {
                     name.ViewPlayerItems();
                     if (name.PlayerItems.Count >= 1)
@@ -39,12 +82,23 @@ namespace TextAdventure
 
                         if (Item1Result == true)
                         {
-                            Actions.UseItem(Item1, name);
-                            Game.FightPrompt();
+                            Items ItemToUse = name.FindPlayerItem(Item1, name);
+                            if (ItemToUse.GetItemAction() == "This item does nothing")
+                            {
+                                Console.WriteLine("Unlucky, that item does absolutely nothing");
+                                name.PlayerItems.Remove(ItemToUse);
+                                Game.PlayerPrompt();
+                            }
+                            else
+                            {
+                                Actions.UseItem(Item1, name, location);
+                                Game.PlayerPrompt();
+                            }
                         }
                         if (Item1Result == false)
                         {
                             Console.WriteLine("You have not picked up that item");
+                            Game.FightPrompt();
                         }
                     }
                     else

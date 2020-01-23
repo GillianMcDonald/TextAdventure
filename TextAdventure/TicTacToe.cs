@@ -74,6 +74,11 @@ namespace TextAdventure
             ShowBoard();
         }
 
+        public void PlayAgain(Player PlayerName, Enemy EnemyName, Location location)
+        {
+            TicTacToeLogic(PlayerName, EnemyName, location);
+        }
+
         public bool TicTacToeLogic(Player PlayerName, Enemy EnemyName, Location location)
         {
             Console.WriteLine(@"There is a wise old mage in the room, she challenges you to a game of Noughts and Crosses.  
@@ -113,7 +118,8 @@ The winner will be the first player to form a complete line of Noughts or Crosse
                 }
                 if (flag2 == -1)
                 {
-                    Console.WriteLine("It's a draw"!);
+                    Console.WriteLine("It's a draw! Let's try that again");
+                    PlayAgain(PlayerName, EnemyName, location);
                 }
             }
             return false;
@@ -135,7 +141,7 @@ The winner will be the first player to form a complete line of Noughts or Crosse
                 return 1;
             }
             //Winning Condition For Third Row   
-            else if (arr[6] == arr[7] && arr[7] == arr[8])
+            else if (arr[7] == arr[8] && arr[8] == arr[9])
             {
                 return 1;
             }

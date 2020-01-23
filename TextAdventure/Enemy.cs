@@ -14,7 +14,7 @@ namespace TextAdventure
 
         Location IMappable.Location => throw new NotImplementedException();
 
-        
+       
 
         public Location Location()
         {
@@ -37,5 +37,7 @@ namespace TextAdventure
         {
             return EnemyName;
         }
+
+        
     }
 }

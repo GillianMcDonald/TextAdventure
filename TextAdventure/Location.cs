@@ -107,26 +107,10 @@ namespace TextAdventure
             };
         }
 
+
         public string GetLocationName()
         {
             return LocationName;
-        }
-
-        public bool GetDoor1()
-        {
-            return Door1;
-        }
-        public bool GetDoor2()
-        {
-            return Door2;
-        }
-        public bool GetDoor3()
-        {
-            return Door3;
-        }
-        public bool GetDoor4()
-        {
-            return Door4;
         }
 
         public string DoorDirection (string Door, string location)
